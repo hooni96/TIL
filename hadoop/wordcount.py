@@ -1,3 +1,5 @@
+# _*_ coding: utf-8 _*_
+
 from mrjob.job import MRJob
 import re	# 워드 자르려고
 
