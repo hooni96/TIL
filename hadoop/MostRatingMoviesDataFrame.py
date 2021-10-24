@@ -20,15 +20,15 @@ if __name__ == "__main__":
     
     # SQL 이용해서 손쉽게 원하는 값 projection!
     result = spark.sql("""
-        SELECT title, score
+        SELECT title, avg, cnt
         FROM movies JOIN(
-            SELECT movieId, avg(rating) as score
+            SELECT movieId, avg(rating) as avg, count(rating) as cnt
             FROM ratings GROUP BY movieId
         ) r ON movies.movieId = r.movieId
-        WHERE score < 2.0
-        ORDER BY score DESC LIMIT 30
+        WHERE avg < 2.0
+        ORDER BY cnt DESC LIMIT 30
         """)
 
     for row in result.collect():
-        print(row.title, row.score)
+        print(row.title, row.avg, row.cnt)
 
