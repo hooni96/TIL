@@ -19,6 +19,7 @@ if __name__ == "__main__":
     df2.createOrReplaceTempView("movies")
     
     # SQL 이용해서 손쉽게 원하는 값 projection!
+		# 전략 그대로를 반영했다. 
     result = spark.sql("""
         SELECT title, avg, cnt
         FROM movies JOIN(
@@ -31,4 +32,3 @@ if __name__ == "__main__":
 
     for row in result.collect():
         print(row.title, row.avg, row.cnt)
-
