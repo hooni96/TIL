@@ -12,10 +12,11 @@ def loadMovies():
         reader = csv.reader(f, delimiter=',')
         next(reader) # skip header
         for row in reader:
-            movies[int(row[0])] = row[1] # movieId, title
+            movies[int(row[0])] = row[1] # (movieId, title)
     return movies
 
 def parseInput(line):
+		# ratings movieId, (rating, 1.0) 이렇게 뽑아내려고 함수 만듬.
     fields = line.split(',')
     return (int(fields[1]), (float(fields[2]), 1.0))
 
@@ -50,13 +51,15 @@ if __name__ == "__main__":
     # filter를 걸어서 평균이 2.0 안되는 녀석들만 걸러준다.
     filterRatings = avgRatings.filter(lambda x: x[1][0] < 2.0)
     
-    # sort
+    # 평가 수로 내림차순 sort
     sortedMovies = filterRatings.sortBy(lambda x: x[1][1], ascending=False)
 
-    # top 10 / take에서 action
+    # top 30 / take에서 action
     results = sortedMovies.take(30)
     
     # reduceByKey랑 take에서 action이 일어난다. 실질적이 계산이 이뤄짐.
-    
+    # 스파크는 게으른 액션..
+
+		# RDD의 key값 이용해서 킵해뒀던 movies map에서 title만 추출, rdd에서 평균평점, 평가수 출력!
     for result in results:
         print(movies[result[0]], result[1][0], result[1][1])
