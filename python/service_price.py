@@ -20,6 +20,6 @@ def service_price():
         if service == 'c':
             result = 67
     
-    print(round(result, 1), '만 원입니다')
+    print(round(result, 1), '만 원입니다.')
 
 service_price()
